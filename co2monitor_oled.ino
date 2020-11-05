@@ -1,5 +1,5 @@
 #include "U8glib.h"
-U8GLIB_SSD1306_128X32 u8g(U8G_I2C_OPT_NONE);  // I2C / TWI 
+U8GLIB_SSD1306_128X32 u8g(U8G_I2C_OPT_NONE);  // I2C / TWI
 #include <SoftwareSerial.h>
 SoftwareSerial mySerial(9, 10); //RX,TX
 
@@ -22,8 +22,8 @@ void loop()
   byte value[9];
   String val;
   int checksum = 0;
-    int retry = 0;
-    char charval[10];
+  int retry = 0;
+  char charval[10];
   mySerial.write(cmd, len);
 
 
@@ -46,14 +46,14 @@ void loop()
                    //value[0] == 0xff && value[1] == 0x86
        ) {
       val = "CO2:" + String(value[2] * 256 + value[3]);
-      val.toCharArray(charval,10);
+      val.toCharArray(charval, 10);
       Serial.println(val);
-        u8g.setFont(u8g_font_unifont);
-        u8g.firstPage();  
-  do {
-    u8g.drawStr( 0, 22, charval);
-  } while( u8g.nextPage() );
-        
+      u8g.setFont(u8g_font_unifont);
+      u8g.firstPage();
+      do {
+        u8g.drawStr( 0, 22, charval);
+      } while ( u8g.nextPage() );
+
     }
   }
   delay(5000);
