@@ -23,10 +23,8 @@ void setup() {
   // put your setup code here, to run once:
   M5.begin();
   M5.Axp.ScreenBreath(9);
-  M5.Lcd.setRotation(3);
+  M5.Lcd.setRotation(1);
   M5.Lcd.fillScreen(BLACK);
-
-  pinMode(M5_BUTTON_HOME, INPUT);
   
   BLEDevice::init("");                        // BLEデバイスを作成する
   Serial.println("Client application start...");
@@ -36,7 +34,9 @@ void setup() {
 
 uint8_t setup_flag = 1;
 void loop() {
-  struct tmpData td;
+// put your main code here, to run repeatedly:
+    Serial.begin(9600);
+    struct tmpData td;
 
     // 所定時間だけスキャンして、見つかったデバイス数を取得する
     BLEScanResults foundDevices = pBLEScan->start(scanning_time);
@@ -62,17 +62,10 @@ void loop() {
                 td.seq_number = seq_number;
                 td.temperature = (float)(data[6] << 8 | data[5]) / 100.00;
                 td.humidity = (float)(data[8] << 8 | data[7]) / 100.00;
+                displayData(&td);
 
             }
         }
-    }
-  // put your main code here, to run repeatedly:
-  Serial.begin(9600);
-  displayValues("BME SENSOR", "", "");
-
-  int buttonState = digitalRead(M5_BUTTON_HOME);
-  if (buttonState == HIGH) {
-        displayValues("", "", "");
     }
 }
 
@@ -93,7 +86,7 @@ void displayData(struct tmpData* td) {
 
 /* 測定値をディスプレイに表示する */
 void displayValues(char* line1, char* line2, char* line3) {
-    M5.Lcd.setCursor(0, 0, 4);    M5.Lcd.printf(line1);
-    M5.Lcd.setCursor(0, 20, 4);   M5.Lcd.printf(line2);
-    M5.Lcd.setCursor(0, 40, 4);   M5.Lcd.printf(line3);
+    M5.Lcd.setCursor(4, 0, 2);    M5.Lcd.printf(line1);
+    M5.Lcd.setCursor(4, 20, 2);   M5.Lcd.printf(line2);
+    M5.Lcd.setCursor(4, 40, 2);   M5.Lcd.printf(line3);
 }
