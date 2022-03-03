@@ -85,7 +85,7 @@ void displayData(struct tmpData* td) {
 }
 
 /* 測定値をディスプレイに表示する */
-void displayValues(char* line1, char* line2, char* line3) {
+void displayValues(const char* line1,const char* line2,const char* line3) {
     M5.Lcd.setCursor(4, 0, 2);    M5.Lcd.printf(line1);
     M5.Lcd.setCursor(4, 20, 2);   M5.Lcd.printf(line2);
     M5.Lcd.setCursor(4, 40, 2);   M5.Lcd.printf(line3);
